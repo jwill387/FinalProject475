@@ -1,7 +1,6 @@
-# Yes
 ui <- fluidPage({
-  titlePanel("Final")
-  navbarPage("Final Project", theme = shinytheme("slate"),
+  titlePanel("FinalProject")
+  navbarPage("Time Series Modelling", theme = shinytheme("slate"),
              tabsetPanel(
                tabPanel(
                  title = "Instructions",
@@ -16,16 +15,35 @@ ui <- fluidPage({
                  p("3. Custom Time Series"),
                  p("User selects their desired variable to plot over the time series"),
                  p("User selects their desired date range to observe"),
-                 p("User is able to interact with the plot by zooming in (click and drag), zooming out (double click), compare data to the trend line, and download their current plot")
+                 p("User is able to interact with the plot by zooming in (click and drag), zooming out (double click), compare data to the trend line, and download their current plot"),
+                 p("*****"),
+                 p("4. Simple Models"),
+                 p("User selects their desired variable to plot over the time series"),
+                 p("User selects their desired simple model to fit over the data (Naive, SeasonalNaive, Mean, Drift"),
+                 p("User uses a slider to select the number of periods that the model will forecast"),
+                 p("User selects their desired date range to observe"),
+                 p("*****"),
+                 p("5. Holts & Holts/Winters Models"),
+                 p("User selects their desired variable to plot over the time series"),
+                 p("User selects their desired simple model to fit over the data (Holts, HoltsWinters"),
+                 p("User uses a slider to select the number of periods that the model will forecast"),
+                 p("User selects their desired date range to observe"),
+                 p("*****"),
+                 p("6. Holts & Holts/Winters Models"),
+                 p("User selects their desired variable to plot over the time series"),
+                 p("User selects their desired simple model to fit over the data (AutoARIMA, ManualARIMA"),
+                 p("If the user selects ManualARIMA, a series of radio buttons will appear allowing the user to select the nonseasonal and seasonal autoregressive terms, number of differences, and moving average terms"),
+                 p("User uses a slider to select the number of periods that the model will forecast"),
+                 p("User selects their desired date range to observe")
                  ),
                
                tabPanel(
-                 title = "Beer Production in Austrailia",
+                 title = "1. Beer Production in Austrailia",
                  plotlyOutput("ts_plot")
                  ),
                
                tabPanel(
-                 title = "Selected Time Series",
+                 title = "2. Selected Time Series",
                  sidebarLayout(
                    sidebarPanel(
                      selectInput(
@@ -55,14 +73,15 @@ ui <- fluidPage({
                      p("Autocorrelation: The degree of similarity between the current time series and a lagged version of itself over given intervals"),
                      p("Example: If it rains today, it is more likely to rain tomorrow than it would be if it were clear skies today"),
                      p("*****"),
-                     p("Decomposition: The remainder of a graph when trend, seasonality, and noise are subtracted out")
+                     p("Decomposition: The remainder of a graph when trend, seasonality, and noise are subtracted out"),
+                     p("Example: How much does random chance contribute to the fact that it could rain tomorrow?")
                     ),
                    )
                 ),
     
     
     tabPanel(
-      title = "Custom Time Series",
+      title = "3. Custom Time Series",
       sidebarLayout(
         sidebarPanel(
           selectInput(
@@ -78,7 +97,8 @@ ui <- fluidPage({
         max = max(aus_production$Quarter),
         start = min(aus_production$Quarter),
         end = max(aus_production$Quarter)
-        ),
+        )
+      
       ),
       
       mainPanel(
@@ -88,7 +108,7 @@ ui <- fluidPage({
     ),
     
     tabPanel(
-      title = "Simple Models",
+      title = "4. Simple Models",
       sidebarLayout(
         sidebarPanel(
           selectInput(
@@ -128,7 +148,7 @@ ui <- fluidPage({
     ),
     
     tabPanel(
-      title = "Holts & Holts/Winters Models",
+      title = "5. Holts & Holts/Winters Models",
       sidebarLayout(
         sidebarPanel(
           selectInput(
@@ -168,7 +188,7 @@ ui <- fluidPage({
     ),
     
     tabPanel(
-      title = "ARIMA",
+      title = "6. ARIMA",
       sidebarLayout(
         sidebarPanel(
           selectInput(
@@ -183,53 +203,9 @@ ui <- fluidPage({
             choices = c("AutoARIMA", "ManualARIMA")
           ),
           
-          prettyRadioButtons(
-            inputId = "p",
-            label = "Select p (ManualARIMA):", 
-            choices = c(0, 1, 2),
-            inline = TRUE, 
-            fill = TRUE
-          ),
+          uiOutput("manualui"),
           
-          prettyRadioButtons(
-            inputId = "d",
-            label = "Select d (ManualARIMA):", 
-            choices = c(0, 1, 2),
-            inline = TRUE, 
-            fill = TRUE
-          ),
           
-          prettyRadioButtons(
-            inputId = "q",
-            label = "Select q (ManualARIMA):", 
-            choices = c(0, 1, 2),
-            inline = TRUE, 
-            fill = TRUE
-          ),
-          
-          prettyRadioButtons(
-            inputId = "ps",
-            label = "Select P (ManualARIMA Seasonal):", 
-            choices = c(0, 1, 2),
-            inline = TRUE, 
-            fill = TRUE
-          ),
-          
-          prettyRadioButtons(
-            inputId = "ds",
-            label = "Select D (ManualARIMA Seasonal):", 
-            choices = c(0, 1),
-            inline = TRUE, 
-            fill = TRUE
-          ),
-          
-          prettyRadioButtons(
-            inputId = "qs",
-            label = "Select Q (ManualARIMA Seasonal):", 
-            choices = c(0, 1, 2),
-            inline = TRUE, 
-            fill = TRUE
-          ),
           
           sliderInput(
             inputId = "selected_h4",

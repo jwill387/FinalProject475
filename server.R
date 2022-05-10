@@ -92,6 +92,59 @@ server <- function(input, output) {
       autoplot(filtered)
   })
   
+  output$manualui <- renderUI({
+    if (input$selected_model4 == "ManualARIMA") {
+      div(
+        prettyRadioButtons(
+          inputId = "p",
+          label = "Select p (ManualARIMA):", 
+          choices = c(0, 1, 2),
+          inline = TRUE, 
+          fill = TRUE
+        ),
+        
+        prettyRadioButtons(
+          inputId = "d",
+          label = "Select d (ManualARIMA):", 
+          choices = c(0, 1, 2),
+          inline = TRUE, 
+          fill = TRUE
+        ),
+        
+        prettyRadioButtons(
+          inputId = "q",
+          label = "Select q (ManualARIMA):", 
+          choices = c(0, 1, 2),
+          inline = TRUE, 
+          fill = TRUE
+        ),
+        
+        prettyRadioButtons(
+          inputId = "ps",
+          label = "Select P (ManualARIMA Seasonal):", 
+          choices = c(0, 1, 2),
+          inline = TRUE, 
+          fill = TRUE
+        ),
+        
+        prettyRadioButtons(
+          inputId = "ds",
+          label = "Select D (ManualARIMA Seasonal):", 
+          choices = c(0, 1),
+          inline = TRUE, 
+          fill = TRUE
+        ),
+        
+        prettyRadioButtons(
+          inputId = "qs",
+          label = "Select Q (ManualARIMA Seasonal):", 
+          choices = c(0, 1, 2),
+          inline = TRUE, 
+          fill = TRUE
+        ),
+      )
+    }
+  })
   
   output$arima_plots <- renderPlot({
     date_range <- yearquarter(input$selected_date_range4)
